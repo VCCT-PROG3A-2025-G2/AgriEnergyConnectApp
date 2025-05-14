@@ -1,0 +1,25 @@
+﻿@model List<AgriEnergyConnectApp.Models.FarmerViewModel>
+
+<h2>All Farmers</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>View Products</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var farmer in Model)
+        {
+            <tr>
+                <td>@farmer.FullName</td>
+                <td>@farmer.Email</td>
+                <td>
+                    <a asp-action="ViewFarmerProducts" asp-route-farmerId="@farmer.Id" class="btn btn-info">View Products</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

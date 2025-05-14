@@ -9,7 +9,8 @@
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        // Category dropdown
         public List<string>? AvailableCategories { get; set; }
+
+        public string FarmerId { get; set; }
     }
 }

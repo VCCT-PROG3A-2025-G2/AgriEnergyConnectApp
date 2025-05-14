@@ -117,5 +117,60 @@ namespace AgriEnergyConnectApp.Controllers
             return View(viewModel); // This matches the @model in your .cshtml
         }
 
+
+        public async Task<IActionResult> ViewFarmers()
+        {
+            var farmers = await _context.Users
+                .Where(u => u.Role == UserRole.Farmer)
+                .Select(u => new FarmerViewModel
+                {
+                    Id = u.Id.ToString(),
+                    FullName = u.FullName,
+                    Email = u.Email
+                }).ToListAsync();
+
+            return View(farmers);
+        }
+
+        public async Task<IActionResult> ViewFarmerProducts(string farmerId, string category, DateTime? startDate, DateTime? endDate)
+        {
+            if (!int.TryParse(farmerId, out int farmerIdInt))
+            {
+                return BadRequest("Invalid Farmer ID");
+            }
+
+            var query = _context.Products
+                .Include(p => p.User)
+                .Where(p => p.FarmerId == farmerIdInt);
+
+            if (!string.IsNullOrEmpty(category))
+                query = query.Where(p => p.Category == category);
+
+            if (startDate.HasValue)
+                query = query.Where(p => p.Date >= startDate.Value);
+
+            if (endDate.HasValue)
+                query = query.Where(p => p.Date <= endDate.Value);
+
+            var categories = await _context.Products
+                .Where(p => p.FarmerId == farmerIdInt)
+                .Select(p => p.Category)
+                .Distinct()
+                .ToListAsync();
+
+            var viewModel = new ProductFilterViewModel
+            {
+                Products = await query.ToListAsync(),
+                AvailableCategories = categories,
+                Category = category,
+                StartDate = startDate,
+                EndDate = endDate,
+                FarmerId = farmerId // still passing string here
+            };
+
+            return View(viewModel);
+        }
+
+
     }
 }
