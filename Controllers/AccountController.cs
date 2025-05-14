@@ -26,7 +26,7 @@ namespace AgriEnergyConnectApp.Controllers
                 {
                     FullName = model.FullName,
                     Email = model.Email,
-                    Password = model.Password, // ⚠️ Use hashing in production
+                    Password = model.Password, 
                     Role = model.Role
                 };
 

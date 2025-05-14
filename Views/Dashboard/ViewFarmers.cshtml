@@ -1,25 +1,227 @@
 ﻿@model List<AgriEnergyConnectApp.Models.FarmerViewModel>
 
-<h2>All Farmers</h2>
+<div class="farmers-container">
+    <div class="farmers-header">
+        <h1><i class="fas fa-users"></i> Farmers Directory</h1>
+        <p class="subtitle">Browse our network of agricultural producers</p>
+    </div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>View Products</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var farmer in Model)
-        {
-            <tr>
-                <td>@farmer.FullName</td>
-                <td>@farmer.Email</td>
-                <td>
-                    <a asp-action="ViewFarmerProducts" asp-route-farmerId="@farmer.Id" class="btn btn-info">View Products</a>
-                </td>
-            </tr>
+    <div class="farmers-table-container">
+        <div class="table-responsive">
+            <table class="farmers-table">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> Farmer Name</th>
+                        <th><i class="fas fa-envelope"></i> Email</th>
+                        <th><i class="fas fa-seedling"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var farmer in Model)
+                        {
+                            <tr>
+                                <td class="farmer-name">@farmer.FullName</td>
+                                <td class="farmer-email">@farmer.Email</td>
+                                <td class="actions">
+                                    <a asp-action="ViewFarmerProducts" asp-route-farmerId="@farmer.Id" class="view-products-btn">
+                                        <i class="fas fa-eye"></i> View Products
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="no-farmers">
+                                <i class="fas fa-info-circle"></i> No farmers found
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary: #2d6a4f;
+        --secondary: #5cb85c;
+        --accent: #f0ad4e;
+        --dark: #1a3a27;
+        --light: #f8f9fa;
+        --text: #333;
+        --text-light: #6c757d;
+    }
+
+    .farmers-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .farmers-header {
+        margin-bottom: 2rem;
+    }
+
+        .farmers-header h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
-    </tbody>
-</table>
+
+            .farmers-header h1 i {
+                margin-right: 10px;
+            }
+
+    .subtitle {
+        color: var(--text-light);
+        margin: 0;
+    }
+
+    .farmers-table-container {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+
+    .farmers-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .farmers-table thead th {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+            .farmers-table thead th i {
+                margin-right: 8px;
+            }
+
+        .farmers-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .farmers-table tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+            .farmers-table tbody tr:hover {
+                background-color: rgba(45, 106, 79, 0.05);
+            }
+
+        .farmers-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+    .farmer-name {
+        font-weight: 600;
+        color: var(--primary);
+    }
+
+    .farmer-email {
+        color: var(--text);
+    }
+
+    .view-products-btn {
+        background-color: var(--primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+        .view-products-btn:hover {
+            background-color: var(--dark);
+            transform: translateY(-1px);
+        }
+
+    .no-farmers {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-light);
+    }
+
+        .no-farmers i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+
+    @@media (max-width: 768px) {
+        .farmers-table thead {
+            display: none;
+        }
+
+        .farmers-table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem;
+        }
+
+        .farmers-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+            .farmers-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--primary);
+                margin-right: 1rem;
+            }
+
+        .view-products-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+    // Add data labels for mobile responsive table
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.querySelector('.farmers-table');
+        if (table) {
+            const headers = table.querySelectorAll('thead th');
+            const rows = table.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach((cell, index) => {
+                    if (headers[index]) {
+                        cell.setAttribute('data-label', headers[index].textContent);
+                    }
+                });
+            });
+        }
+    });
+</script>

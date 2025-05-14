@@ -17,7 +17,7 @@ namespace AgriEnergyConnectApp.Controllers
 
         public IActionResult Add()
         {
-            return View(new Product()); // ✅ This goes to Views/Product/Add.cshtml
+            return View(new Product()); //  This goes to Views/Product/Add.cshtml
         }
 
 
@@ -32,7 +32,7 @@ namespace AgriEnergyConnectApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            // ✅ Check if the logged-in user is a farmer
+            // Check if the logged-in user is a farmer
             var farmer = _context.Users.FirstOrDefault(u => u.Id == userId && u.Role == UserRole.Farmer);
             if (farmer == null)
             {
@@ -40,10 +40,10 @@ namespace AgriEnergyConnectApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            // ✅ Assign the FarmerId before validation
+            //  Assign the FarmerId before validation
             model.FarmerId = farmer.Id;
 
-            // ✅ Validate the complete model (now includes FarmerId)
+            // Validate the complete model (now includes FarmerId)
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors)
@@ -55,7 +55,7 @@ namespace AgriEnergyConnectApp.Controllers
             }
 
 
-            // ✅ Save product to database
+            //  Save product to database
             _context.Products.Add(model);
             _context.SaveChanges();
 

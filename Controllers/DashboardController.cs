@@ -3,7 +3,7 @@ using AgriEnergyConnectApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http; // Required for session
+using Microsoft.AspNetCore.Http; 
 
 namespace AgriEnergyConnectApp.Controllers
 {
@@ -83,7 +83,7 @@ namespace AgriEnergyConnectApp.Controllers
                 {
                     FullName = model.FullName,
                     Email = model.Email,
-                    Password = model.Password, // ⚠️ Note: Hash passwords in production
+                    Password = model.Password, 
                     Role = UserRole.Farmer
                 };
 
@@ -130,7 +130,7 @@ namespace AgriEnergyConnectApp.Controllers
                     .ToList()
             };
 
-            return View(viewModel); // This matches the @model in your .cshtml
+            return View(viewModel);
         }
 
 
@@ -148,6 +148,7 @@ namespace AgriEnergyConnectApp.Controllers
             return View(farmers);
         }
 
+        
         public async Task<IActionResult> ViewFarmerProducts(string farmerId, string category, DateTime? startDate, DateTime? endDate)
         {
             if (!int.TryParse(farmerId, out int farmerIdInt))

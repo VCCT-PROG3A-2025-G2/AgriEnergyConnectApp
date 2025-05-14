@@ -1,19 +1,275 @@
 ﻿@model AgriEnergyConnectApp.Models.RegisterViewModel
 
-<h2>Create Farmer Profile</h2>
+<div class="farmer-registration-container">
+    <div class="registration-card">
+        <div class="registration-header">
+            <i class="fas fa-user-plus registration-icon"></i>
+            <h2>Create Farmer Profile</h2>
+            <p class="subtitle">Add a new farmer</p>
+        </div>
 
-<form asp-action="CreateFarmerProfile" method="post">
-    <div class="form-group">
-        <label for="FullName">Full Name</label>
-        <input type="text" id="FullName" name="FullName" class="form-control" required />
+        <form asp-action="CreateFarmerProfile" method="post" class="farmer-registration-form">
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="FullName" name="FullName" class="form-control" placeholder="Full Name" required />
+                </div>
+                <span asp-validation-for="FullName" class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="Email" name="Email" class="form-control" placeholder="Email Address" required />
+                </div>
+                <span asp-validation-for="Email" class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="Password" name="Password" class="form-control" placeholder="Password" required />
+                    <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility()"></i>
+                </div>
+                <span asp-validation-for="Password" class="validation-message"></span>
+                <div class="password-strength">
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-user-check"></i> Create Profile
+                </button>
+              
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="Email">Email</label>
-        <input type="email" id="Email" name="Email" class="form-control" required />
-    </div>
-    <div class="form-group">
-        <label for="Password">Password</label>
-        <input type="password" id="Password" name="Password" class="form-control" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Create Profile</button>
-</form>
+</div>
+
+<style>
+    :root {
+        --primary: #2d6a4f;
+        --secondary: #5cb85c;
+        --accent: #f0ad4e;
+        --light: #f8f9fa;
+        --text: #333;
+        --text-light: #6c757d;
+    }
+
+    body {
+        background-color: #f5fdf7;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .farmer-registration-container {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%232d6a4f" opacity="0.03"><path d="M50,5 C60,20 70,30 80,40 C90,50 95,60 95,70 C95,80 85,90 75,90 C65,90 55,80 50,70 C45,80 35,90 25,90 C15,90 5,80 5,70 C5,60 10,50 20,40 C30,30 40,20 50,5 Z"/></svg>');
+        background-size: 300px;
+    }
+
+    .registration-card {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 500px;
+        overflow: hidden;
+        border-top: 5px solid var(--primary);
+    }
+
+    .registration-header {
+        text-align: center;
+        padding: 2rem 2rem 1rem;
+        background-color: #f9f9f9;
+    }
+
+    .registration-icon {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .registration-header h2 {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .subtitle {
+        color: var(--text-light);
+        margin-bottom: 0;
+    }
+
+    .farmer-registration-form {
+        padding: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .input-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        color: var(--primary);
+        font-size: 1.1rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px 12px 45px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+            outline: none;
+        }
+
+    .password-toggle {
+        position: absolute;
+        right: 15px;
+        color: var(--text-light);
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+    .password-strength {
+        display: flex;
+        gap: 5px;
+        margin-top: 10px;
+    }
+
+    .strength-bar {
+        height: 4px;
+        width: 100%;
+        background-color: #e0e0e0;
+        border-radius: 2px;
+    }
+
+    .validation-message {
+        color: #e74c3c;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 1rem;
+    }
+
+        .submit-btn:hover {
+            background-color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn i {
+            margin-right: 8px;
+        }
+
+    .form-footer {
+        text-align: center;
+    }
+
+    .login-link {
+        margin-top: 1.5rem;
+        color: var(--text-light);
+        font-size: 0.95rem;
+    }
+
+        .login-link a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+            .login-link a:hover {
+                text-decoration: underline;
+            }
+
+    @@media (max-width: 576px) {
+        .farmer-registration-container {
+            padding: 1rem;
+        }
+
+        .registration-card {
+            border-radius: 10px;
+        }
+
+        .registration-header, .farmer-registration-form {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById('Password');
+        const toggleIcon = document.querySelector('.password-toggle');
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
+
+    // Simple password strength indicator
+    document.getElementById('Password').addEventListener('input', function(e) {
+        const strengthBars = document.querySelectorAll('.strength-bar');
+        const value = e.target.value;
+
+        // Reset all bars
+        strengthBars.forEach(bar => {
+            bar.style.backgroundColor = '#e0e0e0';
+        });
+
+        if (value.length > 0) {
+            strengthBars[0].style.backgroundColor = '#e74c3c';
+        }
+        if (value.length >= 6) {
+            strengthBars[1].style.backgroundColor = '#f39c12';
+        }
+        if (value.length >= 8 && /[A-Z]/.test(value) && /[0-9]/.test(value)) {
+            strengthBars[2].style.backgroundColor = '#2ecc71';
+        }
+    });
+</script>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
