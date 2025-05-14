@@ -1,0 +1,26 @@
+﻿@model List<AgriEnergyConnectApp.Models.Product>
+
+<h2>Welcome, Farmer!</h2>
+<a href="/Product/Add" class="btn btn-primary mb-3">Add New Product</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Category</td>
+                <td>@product.Date.ToString("yyyy-MM-dd")</td>
+                <td>@product.Price.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
