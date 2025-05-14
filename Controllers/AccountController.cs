@@ -1,8 +1,10 @@
 ﻿using AgriEnergyConnectApp.Data;
 using AgriEnergyConnectApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http; // Required for session
+using Microsoft.AspNetCore.Http; 
 
+//My sql lite did not want to work i tried with two projects and when i try to update migrations it did not want to work - it said the database is locked
+// Ai was used to help with frontend and to help errors to fix my functionality
 namespace AgriEnergyConnectApp.Controllers
 {
     public class AccountController : Controller
@@ -42,6 +44,7 @@ namespace AgriEnergyConnectApp.Controllers
         // GET: Login
         public IActionResult Login() => View();
 
+        //make sure user can login
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
@@ -50,7 +53,7 @@ namespace AgriEnergyConnectApp.Controllers
 
             if (user != null)
             {
-                // ✅ Store the UserId in session
+                // Stores the UserId in session
                 HttpContext.Session.SetInt32("UserId", user.Id);
 
                 if (user.Role == UserRole.Farmer)
