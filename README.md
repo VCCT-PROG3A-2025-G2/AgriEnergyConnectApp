@@ -17,13 +17,13 @@ AgriEnergy Connect supports the South African Department of Agriculture’s digi
 
 To run this project, install the following software/tools:
 
-- [.NET 6 SDK or later](https://dotnet.microsoft.com/download)
-- [Visual Studio 2022 or later](https://visualstudio.microsoft.com/)
-- [SQL Server or SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
-- [Entity Framework Core CLI](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
-- Git (optional for cloning)
+- .NET 8 SDK or later
+- Visual Studio 2022 or later](https://visualstudio.microsoft.com/)
+- SQL Server Management or SQLLite DB Browser
+- Entity Framework Core
+- Git (for cloning)
 
----
+-----
 
 ## Setting Up the Development Environment
 
@@ -40,4 +40,57 @@ dotnet restore
   "DefaultConnection": "Server=localhost;Database=AgriEnergyDB;Trusted_Connection=True;"
 }
 
-### 3. Configure the Database
+### 4. Run Migrations
+- Install EF Core
+ dotnet tool install --global dotnet-ef
+- Apply migrations yo create data schema
+  dotnet ef database update
+
+## Setting Up the Development Environment
+- Build thr App:
+  dotnet build
+- Run the App:
+  dotnet run
+
+  -----
+  
+## System Functionalities
+Main Features
+
+Farmer Dashboard:
+- Farmers can view and manage their products, including adding new products, updating existing products, and deleting products.
+- They can filter products by category and view product details.
+- Admin Dashboard:
+- Admins (employees) can view all farmer profiles and manage them.
+- Admins can also filter and search products across all farmers.
+
+Product Management:
+- Farmers can add products, including details such as name, category, price, and date.
+- Admins can view, approve/reject, and manage products from all farmers.
+- User Registration and Login:
+- Farmers can create accounts and log in to their dashboards.
+- Admins can manage farmer accounts and roles.
+-----
+## User Role and Permissions
+The system supports two main user roles: Farmer and Employee (Admin). Each role has different permissions and access levels.
+
+Farmer
+- Dashboard: Farmers have access to a personalized dashboard where they can manage their - products, view product details, and perform actions related to their products.
+- Product Management: Farmers can add new products, update existing ones, and delete products.
+- Profile Management: Farmers can view and update their profile information.
+Employee
+- Dashboard: Admins have access to a broader dashboard to manage multiple farmers, view their products, and manage farmer profiles.
+- Farmer Management: Admins can create, view, edit, or delete farmer profiles.
+- Product Management: Admins can view, approve, or reject products listed by farmers.
+- Role Management: Admins have the ability to assign and manage roles for different users,   ensuring that the right permissions are granted to each user.
+----- 
+## Screenshots 
+![Product Display Elegant Facebook Cover](https://github.com/user-attachments/assets/377d5bf6-ceeb-4356-be6b-b004b50beeb1)
+
+----- 
+## References
+https://www.youtube.com/watch?v=NDlJ-ROmNTo
+https://www.youtube.com/watch?v=BWOcba-XfcM
+https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/working-with-sql?view=aspnetcore-9.0
+https://www.c-sharpcorner.com/blogs/manage-session-in-mvc
+https://stackoverflow.com/questions/19181085/session-manage
