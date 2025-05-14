@@ -1,6 +1,7 @@
 ﻿using AgriEnergyConnectApp.Data;
 using AgriEnergyConnectApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http; // Required for session
 
 namespace AgriEnergyConnectApp.Controllers
 {
@@ -25,7 +26,7 @@ namespace AgriEnergyConnectApp.Controllers
                 {
                     FullName = model.FullName,
                     Email = model.Email,
-                    Password = model.Password, // NOTE: Use hashing in production
+                    Password = model.Password, // ⚠️ Use hashing in production
                     Role = model.Role
                 };
 
@@ -49,10 +50,13 @@ namespace AgriEnergyConnectApp.Controllers
 
             if (user != null)
             {
+                // ✅ Store the UserId in session
+                HttpContext.Session.SetInt32("UserId", user.Id);
+
                 if (user.Role == UserRole.Farmer)
                     return RedirectToAction("FarmerDashboard", "Dashboard");
 
-                else if (user.Role == UserRole.Employee)
+                if (user.Role == UserRole.Employee)
                     return RedirectToAction("EmployeeDashboard", "Dashboard");
             }
 

@@ -23,6 +23,6 @@ namespace AgriEnergyConnectApp.Models
         // Foreign Key to User
         [ForeignKey("User")]
         public int FarmerId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }

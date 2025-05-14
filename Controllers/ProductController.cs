@@ -21,29 +21,48 @@ namespace AgriEnergyConnectApp.Controllers
         }
 
 
-
         [HttpPost]
         public IActionResult Add(Product model)
         {
-            var farmer = _context.Users.FirstOrDefault(u => u.Role == UserRole.Farmer);
-            if (farmer == null)
+            // ✅ Check if user is logged in
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
             {
+                TempData["Error"] = "You must be logged in to add a product.";
                 return RedirectToAction("Login", "Account");
             }
 
-            model.FarmerId = farmer.Id;
-
-            if (ModelState.IsValid)
+            // ✅ Check if the logged-in user is a farmer
+            var farmer = _context.Users.FirstOrDefault(u => u.Id == userId && u.Role == UserRole.Farmer);
+            if (farmer == null)
             {
-                _context.Products.Add(model);
-                _context.SaveChanges();
-
-                // ✅ Redirect to FarmerDashboard which expects a List<Product>
-                return RedirectToAction("FarmerDashboard", "Dashboard");
+                TempData["Error"] = "No farmer found with this account.";
+                return RedirectToAction("Login", "Account");
             }
 
-            return View(model); // Only return this if validation fails (and Add.cshtml expects a single Product)
+            // ✅ Assign the FarmerId before validation
+            model.FarmerId = farmer.Id;
+
+            // ✅ Validate the complete model (now includes FarmerId)
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage)
+                                              .ToList();
+
+                TempData["Error"] = "Validation Errors: " + string.Join("; ", errors);
+                return View(model);
+            }
+
+
+            // ✅ Save product to database
+            _context.Products.Add(model);
+            _context.SaveChanges();
+
+            TempData["Success"] = "Product saved successfully!";
+            return RedirectToAction("FarmerDashboard", "Dashboard");
         }
+
 
     }
 }
