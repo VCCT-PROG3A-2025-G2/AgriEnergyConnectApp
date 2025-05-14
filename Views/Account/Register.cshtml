@@ -1,15 +1,215 @@
 ﻿@model RegisterViewModel
 
-<h2>Register</h2>
-<form asp-action="Register" method="post">
-    <input asp-for="FullName" placeholder="Full Name" />
-    <input asp-for="Email" placeholder="Email" />
-    <input asp-for="Password" type="password" placeholder="Password" />
-    <select asp-for="Role">
-        <option value="Farmer">Farmer</option>
-        <option value="Employee">Employee</option>
-    </select>
-    <button type="submit">Register</button>
-</form>
 
-}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <img src="/images/logo.png" alt="Agri-Energy Connect Logo" class="auth-logo">
+            <h2 class="auth-title">Join Our Farming Community</h2>
+            <p class="auth-subtitle">Connect with sustainable energy solutions</p>
+        </div>
+
+        <form asp-action="Register" method="post" class="auth-form">
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fas fa-user"></i>
+                    <input asp-for="FullName" placeholder="Full Name" class="form-input" />
+                </div>
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input asp-for="Email" placeholder="Email" class="form-input" />
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input asp-for="Password" type="password" placeholder="Password" class="form-input" />
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fas fa-user-tag"></i>
+                    <select asp-for="Role" class="form-input">
+                        <option value="">Select Your Role</option>
+                        <option value="Farmer">Farmer</option>
+                        <option value="Employee">Employee</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="auth-button">
+                <i class="fas fa-seedling"></i> Register Now
+            </button>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a asp-action="Login">Sign In</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .auth-container {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                    url('/images/farm-field.jpg') no-repeat center center;
+        background-size: cover;
+        padding: 20px;
+    }
+
+    .auth-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 450px;
+        overflow: hidden;
+        border-top: 5px solid #2d6a4f;
+    }
+
+    .auth-header {
+        padding: 30px;
+        text-align: center;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    .auth-logo {
+        height: 60px;
+        margin-bottom: 15px;
+    }
+
+    .auth-title {
+        color: #2d6a4f;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .auth-subtitle {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+
+    .auth-form {
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .input-icon {
+        position: relative;
+    }
+
+    .input-icon i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #2d6a4f;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px 15px 12px 45px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+        background-color: #f9f9f9;
+    }
+
+    .form-input:focus {
+        border-color: #2d6a4f;
+        box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2);
+        outline: none;
+        background-color: white;
+    }
+
+    select.form-input {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232d6a4f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 15px;
+    }
+
+    .auth-button {
+        width: 100%;
+        padding: 14px;
+        background-color: #2d6a4f;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+    }
+
+    .auth-button:hover {
+        background-color: #1e4d36;
+        transform: translateY(-2px);
+    }
+
+    .auth-button i {
+        margin-right: 8px;
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .auth-footer a {
+        color: #2d6a4f;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .text-danger {
+        color: #e74c3c;
+        font-size: 13px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    @@media (max-width: 576px) {
+        .auth-card {
+            border-radius: 10px;
+        }
+        
+        .auth-header, .auth-form {
+            padding: 20px;
+        }
+    }
+</style>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

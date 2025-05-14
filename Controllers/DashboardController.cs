@@ -82,5 +82,40 @@ namespace AgriEnergyConnectApp.Controllers
             return View(model);
         }
 
+        public IActionResult ViewAllProducts(string category, DateTime? startDate, DateTime? endDate)
+        {
+            var query = _context.Products.Include(p => p.User).AsQueryable();
+
+            // Apply filters
+            if (!string.IsNullOrEmpty(category))
+            {
+                query = query.Where(p => p.Category == category);
+            }
+
+            if (startDate.HasValue)
+            {
+                query = query.Where(p => p.Date >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(p => p.Date <= endDate.Value);
+            }
+
+            var viewModel = new ProductFilterViewModel
+            {
+                Products = query.ToList(),
+                Category = category,
+                StartDate = startDate,
+                EndDate = endDate,
+                AvailableCategories = _context.Products
+                    .Select(p => p.Category)
+                    .Distinct()
+                    .ToList()
+            };
+
+            return View(viewModel); // This matches the @model in your .cshtml
+        }
+
     }
 }

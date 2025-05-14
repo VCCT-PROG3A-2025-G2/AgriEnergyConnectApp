@@ -1,0 +1,58 @@
+﻿@model AgriEnergyConnectApp.Models.ProductFilterViewModel
+
+<h2>All Products</h2>
+
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-4">
+        <label>Category</label>
+        <select name="category" class="form-control">
+            <option value="">-- All --</option>
+            @foreach (var cat in Model.AvailableCategories)
+            {
+                if (cat == Model.Category)
+                {
+                    <option value="@cat" selected>@cat</option>
+                }
+                else
+                {
+                    <option value="@cat">@cat</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label>Start Date</label>
+        <input type="date" name="startDate" class="form-control" value="@Model.StartDate?.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-3">
+        <label>End Date</label>
+        <input type="date" name="endDate" class="form-control" value="@Model.EndDate?.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-2 align-self-end">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Farmer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Category</td>
+                <td>@product.Date.ToShortDateString()</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>@product.User?.FullName</td>
+            </tr>
+        }
+    </tbody>
+</table>
