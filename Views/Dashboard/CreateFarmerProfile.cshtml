@@ -1,0 +1,19 @@
+﻿@model AgriEnergyConnectApp.Models.RegisterViewModel
+
+<h2>Create Farmer Profile</h2>
+
+<form asp-action="CreateFarmerProfile" method="post">
+    <div class="form-group">
+        <label for="FullName">Full Name</label>
+        <input type="text" id="FullName" name="FullName" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="Password">Password</label>
+        <input type="password" id="Password" name="Password" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Create Profile</button>
+</form>
