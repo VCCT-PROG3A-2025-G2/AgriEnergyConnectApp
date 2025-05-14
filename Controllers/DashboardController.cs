@@ -23,27 +23,43 @@ namespace AgriEnergyConnectApp.Controllers
         {
             try
             {
-                var farmer = _context.Users.FirstOrDefault(u => u.Role == UserRole.Farmer);
-                if (farmer == null)
+                // Get the logged-in user's ID from the session
+                var userId = HttpContext.Session.GetInt32("UserId");
+
+                if (userId == null)
                 {
-                    _logger.LogWarning("No farmer user found.");
-                    return RedirectToAction("Login", "Account");
+                    _logger.LogWarning("No user ID in session.");
+                    return RedirectToAction("Login", "Account"); // Redirect to login if no user ID found
                 }
 
+                // Retrieve the farmer using the user ID and ensure they are a farmer
+                var farmer = _context.Users.FirstOrDefault(u => u.Id == userId && u.Role == UserRole.Farmer);
+
+                if (farmer == null)
+                {
+                    _logger.LogWarning("Logged-in user is not a farmer.");
+                    return RedirectToAction("Login", "Account"); // Redirect to login if the user is not a farmer
+                }
+
+                // Retrieve the products associated with the logged-in farmer
                 var products = _context.Products
                     .Where(p => p.FarmerId == farmer.Id)
                     .ToList();
 
                 _logger.LogInformation($"Retrieved {products.Count} products for farmer with ID {farmer.Id}");
 
+                // Return the view with the products for the logged-in farmer
                 return View(products);
             }
             catch (Exception ex)
             {
+                // Log any errors that occur
                 _logger.LogError(ex, "Error occurred while loading farmer dashboard.");
                 return View("Error", new ErrorViewModel { Message = "An error occurred while loading your dashboard." });
             }
         }
+
+
 
         // Original functionality: Employee Dashboard
         public IActionResult EmployeeDashboard()
