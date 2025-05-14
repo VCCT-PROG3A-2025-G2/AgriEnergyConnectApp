@@ -63,36 +63,24 @@ namespace AgriEnergyConnectApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Retrieve the employee's user ID from the session
-                var employeeId = HttpContext.Session.GetInt32("UserId");
-
-                if (employeeId == null)
-                {
-                    return RedirectToAction("Login", "Account"); // Redirect if employee is not logged in
-                }
-
-                // Create a new farmer user profile
-                var farmer = new User
+                var user = new User
                 {
                     FullName = model.FullName,
                     Email = model.Email,
-                    Password = model.Password, // Ensure to hash the password in production
+                    Password = model.Password, // ⚠️ Note: Hash passwords in production
                     Role = UserRole.Farmer
                 };
 
-                // Add the farmer to the Users table
-                _context.Users.Add(farmer);
+                _context.Users.Add(user);
                 _context.SaveChanges();
 
-                // Log the creation of the farmer profile
-                _logger.LogInformation($"Farmer profile created with ID: {farmer.Id}");
-
-                // Redirect back to employee dashboard after creation
-                return RedirectToAction("EmployeeDashboard", "Dashboard");
+                TempData["SuccessMessage"] = "Farmer profile successfully created.";
+                return RedirectToAction("EmployeeDashboard");
             }
 
-            // Return the view with validation errors if model is invalid
+            // If model state is invalid, return to the view with validation errors
             return View(model);
         }
+
     }
 }

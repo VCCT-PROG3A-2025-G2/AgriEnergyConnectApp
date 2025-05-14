@@ -1,4 +1,14 @@
 ﻿<h2>Welcome, Employee!</h2>
 
-<!-- Link to create a farmer profile -->
-<a href="@Url.Action("CreateFarmerProfile", "Dashboard")" class="btn btn-primary">Create Farmer Profile</a>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<a asp-controller="Dashboard" asp-action="CreateFarmerProfile" class="btn btn-primary">
+    Create Farmer Profile
+</a>
+
+
