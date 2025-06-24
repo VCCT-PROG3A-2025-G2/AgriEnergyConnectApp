@@ -1,5 +1,6 @@
 using AgriEnergyConnectApp.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace AgriEnergyConnectApp
 {
@@ -12,8 +13,12 @@ namespace AgriEnergyConnectApp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Add your DbContext here with retry on failure
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                    sqlOptions => sqlOptions.EnableRetryOnFailure()
+                ));
 
             // ? Add distributed memory cache (required for session)
             builder.Services.AddDistributedMemoryCache();
