@@ -25,32 +25,29 @@ To run this project, install the following software/tools:
 
 -----
 
-## Setting Up the Development Environment
-
-### 1. Clone the Repository
-git clone https: https://github.com/VCCT-PROG3A-2025-G2/AgriEnergyConnectApp.git
-cd AgriEnergyConnect
-
-### 2. Restore .Net Dependencies
-dotnet restore
-
-### 3. Configure the Database
-- Open appsettings.json and modify the connection string
-"ConnectionStrings": {
-  "DefaultConnection": "Server=localhost;Database=AgriEnergyDB;Trusted_Connection=True;"
-}
-
-### 4. Run Migrations
-- Install EF Core
- dotnet tool install --global dotnet-ef
-- Apply migrations yo create data schema
-  dotnet ef database update
 
 ## Setting Up the Development Environment
-- Build thr App:
-  dotnet build
-- Run the App:
-  dotnet run
+## 1. Clone the Repository
+git clone: https://github.com/VCCT-PROG3A-2025-G2/AgriEnergyConnectApp.git
+2. Configure the Database
+Open appsettings.json and modify the connection string
+ "ConnectionStrings": { "DefaultConnection": "Server=localhost;Database=AgriEnergyDB;Trusted_Connection=True;" }
+
+## 3.Run Migrations
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+
+## 4. Build and Run the Project
+dotnet build 
+dotnet run
+
+## 5.	Access the App 
+Farmer login details: Username: collin.conrad@gmail.com
+Password: Collin@123
+
+Employee details: Username: kenny.geemooi@gmail.com 
+Password: kenny123
+
 
   -----
   
