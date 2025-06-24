@@ -28,7 +28,7 @@ To run this project, install the following software/tools:
 ## Setting Up the Development Environment
 
 ### 1. Clone the Repository
-git clone https://github.com/your-username/AgriEnergyConnect.git
+git clone https: https://github.com/VCCT-PROG3A-2025-G2/AgriEnergyConnectApp.git
 cd AgriEnergyConnect
 
 ### 2. Restore .Net Dependencies
