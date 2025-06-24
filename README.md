@@ -29,7 +29,8 @@ To run this project, install the following software/tools:
 ## Setting Up the Development Environment
 ## 1. Clone the Repository
 git clone: https://github.com/VCCT-PROG3A-2025-G2/AgriEnergyConnectApp.git
-2. Configure the Database
+
+## 2. Configure the Database
 Open appsettings.json and modify the connection string
  "ConnectionStrings": { "DefaultConnection": "Server=localhost;Database=AgriEnergyDB;Trusted_Connection=True;" }
 
